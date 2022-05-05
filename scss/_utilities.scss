@@ -1,3 +1,21 @@
 html {
     font-family: 'Raleway', sans-serif;
 }
+
+.container {
+    margin: auto;
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+
+@media (min-width: 500px) {
+    .container {
+        width: 80%;
+        
+    }
+}

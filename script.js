@@ -15,8 +15,10 @@ const addBook = () => {
 const removeBook = () => {
   //Remove book from library
 };
+//const createCard = (title, author, isbn, year, pages, read, img) => {
+const creaetModal = (title, author, imgUrl) => {};
 
-const api_url =
+let api_url =
   "https://www.googleapis.com/books/v1/volumes?q=this+is+your+mind+on+plants&maxResults=5";
 
 async function getBook() {
@@ -24,8 +26,19 @@ async function getBook() {
   const data = await response.json();
   let img = new Image();
   img.src = data.items[0].volumeInfo.imageLinks.thumbnail;
-  console.log(img.src);
-  document.body.append(img);
+  imgContainer = document.createElement("div");
+  imgContainer.append(img);
+  imgContainer.className = "book";
+  document.querySelector(".container").append(imgContainer);
 }
 
-data = getBook();
+getBook();
+api_url =
+  "https://www.googleapis.com/books/v1/volumes?q=how+to+change+your+mind&maxResults=5";
+getBook();
+api_url =
+  "https://www.googleapis.com/books/v1/volumes?q=cracking+the+coding+interview&maxResults=5";
+getBook();
+api_url =
+  "https://www.googleapis.com/books/v1/volumes?q=pragmatic+programmer&maxResults=5";
+getBook();

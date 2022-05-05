@@ -1,7 +1,14 @@
 @import 'reset';
 @import 'utilities';
 
-html {
-    font-family: 'Raleway', sans-serif
+.header {
+    margin: 10px;
+
+    &__title {
+        font-size: 2rem;
+        font-weight: 400;
+    }
 }
+
+
 
