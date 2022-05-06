@@ -28,6 +28,7 @@ async function getBook() {
   imgContainer.className = "book";
   document.querySelector(".container").append(imgContainer);
 }
+
 const createHtmlElement = (html) => {
   const template = document.createElement("template");
   template.innerHTML = html.trim();
@@ -49,14 +50,27 @@ const closeModal = (book) => {
   });
 };
 
+const removeBook = (book) => {
+  document
+    .getElementById(`delete-${book.isbn}`)
+    .addEventListener("click", () => {
+      books = books.filter((val) => val.isbn != book.isbn);
+      render(books);
+    });
+};
+
 const modalElement = (book) => {
   const newModal = createHtmlElement(`
     <dialog id=${book.isbn}>
         <img src=${book.imgSrc}/>
         <button id=btn-${book.isbn}>Close</button>
+        <button id=delete-${book.isbn}>Remove</button>
     </dialog>
     `);
   document.querySelector(".container").append(newModal);
+  showModal(book);
+  closeModal(book);
+  removeBook(book);
 };
 
 const bookElement = (book) => {
@@ -69,21 +83,14 @@ const bookElement = (book) => {
 };
 
 const render = (arr) => {
-  arr.map((book) => {
+  let container = document.querySelector(".container");
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+  arr.forEach((book) => {
     bookElement(book);
-    showModal(book);
     modalElement(book);
-    closeModal(book);
   });
 };
 
 render(books);
-// api_url =
-//   "https://www.googleapis.com/books/v1/volumes?q=how+to+change+your+mind&maxResults=5";
-// getBook();
-// api_url =
-//   "https://www.googleapis.com/books/v1/volumes?q=cracking+the+coding+interview&maxResults=5";
-// getBook();
-// api_url =
-//   "https://www.googleapis.com/books/v1/volumes?q=pragmatic+programmer&maxResults=5";
-// getBook();
