@@ -4,7 +4,7 @@ html {
 
 .container {
     margin: auto;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -13,9 +13,3 @@ html {
 }
 
 
-@media (min-width: 500px) {
-    .container {
-        width: 80%;
-        
-    }
-}

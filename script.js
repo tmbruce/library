@@ -1,25 +1,22 @@
-function Book(title, author, isbn, year, pages, read, imgSrc) {
-  this.title = title;
-  this.author = author;
-  this.isbn = isbn;
-  this.year = year;
-  this.pages = pages;
-  this.read = read;
-  this.imgSrc = imgSrc;
-}
+import Book from "./js/book.js";
+import defaultBooks from "./js/defaultBooks.js";
 
-const addBook = () => {
-  //Add book to library
-};
-
-const removeBook = () => {
-  //Remove book from library
-};
-//const createCard = (title, author, isbn, year, pages, read, img) => {
-const creaetModal = (title, author, imgUrl) => {};
+let books = [];
+defaultBooks.map((defaultBook) => {
+  let book = new Book(
+    defaultBook.title,
+    defaultBook.author,
+    defaultBook.isbn,
+    defaultBook.year,
+    defaultBook.pages,
+    defaultBook.read,
+    defaultBook.imgSrc
+  );
+  books.push(book);
+});
 
 let api_url =
-  "https://www.googleapis.com/books/v1/volumes?q=this+is+your+mind+on+plants&maxResults=5";
+  "https://www.googleapis.com/books/v1/volumes?q=How+to+change+your+mind&maxResults=5";
 
 async function getBook() {
   const response = await fetch(api_url);
@@ -31,14 +28,62 @@ async function getBook() {
   imgContainer.className = "book";
   document.querySelector(".container").append(imgContainer);
 }
+const createHtmlElement = (html) => {
+  const template = document.createElement("template");
+  template.innerHTML = html.trim();
+  return template.content.firstElementChild;
+};
 
-getBook();
-api_url =
-  "https://www.googleapis.com/books/v1/volumes?q=how+to+change+your+mind&maxResults=5";
-getBook();
-api_url =
-  "https://www.googleapis.com/books/v1/volumes?q=cracking+the+coding+interview&maxResults=5";
-getBook();
-api_url =
-  "https://www.googleapis.com/books/v1/volumes?q=pragmatic+programmer&maxResults=5";
-getBook();
+const showModal = (book) => {
+  document
+    .getElementById(`container-${book.isbn}`)
+    .addEventListener("click", () => {
+      let modal = document.getElementById(`${book.isbn}`);
+      modal.showModal();
+    });
+};
+
+const closeModal = (book) => {
+  document.getElementById(`btn-${book.isbn}`).addEventListener("click", () => {
+    document.getElementById(book.isbn).close();
+  });
+};
+
+const modalElement = (book) => {
+  const newModal = createHtmlElement(`
+    <dialog id=${book.isbn}>
+        <img src=${book.imgSrc}/>
+        <button id=btn-${book.isbn}>Close</button>
+    </dialog>
+    `);
+  document.querySelector(".container").append(newModal);
+};
+
+const bookElement = (book) => {
+  const newBook = createHtmlElement(`
+        <div id="container-${book.isbn}" class="book">
+            <img src="${book.imgSrc}"/>
+        </div>
+    `);
+  document.querySelector(".container").append(newBook);
+};
+
+const render = (arr) => {
+  arr.map((book) => {
+    bookElement(book);
+    showModal(book);
+    modalElement(book);
+    closeModal(book);
+  });
+};
+
+render(books);
+// api_url =
+//   "https://www.googleapis.com/books/v1/volumes?q=how+to+change+your+mind&maxResults=5";
+// getBook();
+// api_url =
+//   "https://www.googleapis.com/books/v1/volumes?q=cracking+the+coding+interview&maxResults=5";
+// getBook();
+// api_url =
+//   "https://www.googleapis.com/books/v1/volumes?q=pragmatic+programmer&maxResults=5";
+// getBook();

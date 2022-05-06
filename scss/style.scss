@@ -1,14 +1,51 @@
 @import 'reset';
 @import 'utilities';
 
-.header {
-    margin: 10px;
-
-    &__title {
-        font-size: 2rem;
-        font-weight: 400;
+dialog {
+    border: none;
+    border-radius: 10px;
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
     }
 }
 
+.ribbon {
+    width: 0;
+    height: 30px;
+    border-right: 10px solid green;
+    border-left: 10px solid green;
+    border-bottom: 8px solid transparent;
+}
+
+@media (max-width: 399px) {
+    .header {
+        margin: 10px;
+
+        &__title {
+            font-size: 2rem;
+            font-weight: 400;
+        }
+    }
+}
+
+@media (min-width: 400px) {
+    .container {
+        width: 75%;
+    }
+
+    .header {
+        width: 80%;
+        font-size: 3rem;
+        font-weight: 200;
+        display: flex;
+        justify-content: space-between;
+        padding: 30px;
+        margin-inline: auto;
+    }
+    & button {
+        margin: auto 0;
+    }
+}
 
 
