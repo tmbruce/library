@@ -15,20 +15,6 @@ defaultBooks.map((defaultBook) => {
   books.push(book);
 });
 
-let api_url =
-  "https://www.googleapis.com/books/v1/volumes?q=How+to+change+your+mind&maxResults=5";
-
-async function getBook() {
-  const response = await fetch(api_url);
-  const data = await response.json();
-  let img = new Image();
-  img.src = data.items[0].volumeInfo.imageLinks.thumbnail;
-  imgContainer = document.createElement("div");
-  imgContainer.append(img);
-  imgContainer.className = "book";
-  document.querySelector(".container").append(imgContainer);
-}
-
 const createHtmlElement = (html) => {
   const template = document.createElement("template");
   template.innerHTML = html.trim();
@@ -87,10 +73,14 @@ const render = (arr) => {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
-  arr.forEach((book) => {
-    bookElement(book);
-    modalElement(book);
-  });
+  arr.length == 0
+    ? container.append(
+        createHtmlElement(`<div>Add some books to your library!</div>`)
+      )
+    : arr.forEach((book) => {
+        bookElement(book);
+        modalElement(book);
+      });
 };
 
 render(books);

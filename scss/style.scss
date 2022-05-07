@@ -18,10 +18,30 @@ dialog {
     border-bottom: 8px solid transparent;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    &__options {
+        display: flex;
+    }
+    &__button {
+        align-self: center;
+        border: 1px solid black;
+        border-radius: 15px;
+        padding: 5px 10px;
+        background-color: white;
+        color: black;
+        &:hover {
+            transform: scale(1.05);
+            transition: 200ms;
+        }
+    }
+}
+
 @media (max-width: 399px) {
     .header {
         margin: 10px;
-
         &__title {
             font-size: 2rem;
             font-weight: 400;
@@ -33,19 +53,16 @@ dialog {
     .container {
         width: 75%;
     }
-
     .header {
-        width: 80%;
+        width: 75%;
         font-size: 3rem;
         font-weight: 200;
-        display: flex;
-        justify-content: space-between;
         padding: 30px;
         margin-inline: auto;
+
+
     }
-    & button {
-        margin: auto 0;
-    }
+    
 }
 
 
