@@ -24,18 +24,31 @@ dialog {
     align-content: center;
     &__options {
         display: flex;
+        align-items: center;
     }
-    &__button {
+    &__search__button {
+        cursor: pointer;
         align-self: center;
         border: 1px solid black;
         border-radius: 15px;
         padding: 5px 10px;
         background-color: white;
         color: black;
+        margin-left: 20px;
         &:hover {
             transform: scale(1.05);
             transition: 200ms;
         }
+    }
+    & form {
+        display: flex;
+        align-items: center;
+    }
+    & input {
+        height: 1.5rem;
+        padding-left: 15px;
+        border-radius: 15px;
+        border: 1px solid black;
     }
 }
 

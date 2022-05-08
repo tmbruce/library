@@ -15,6 +15,29 @@ defaultBooks.map((defaultBook) => {
   books.push(book);
 });
 
+let searchBox = document.querySelector(".header__search__input");
+searchBox.addEventListener("input", (e) => {
+  let term = e.target.value.toLowerCase();
+  let bookResults = [];
+  if (term != "") {
+    bookResults = books.filter(
+      (book) =>
+        book.isbn.includes(term) ||
+        book.author.toLowerCase().includes(term) ||
+        book.title.toLowerCase().includes(term)
+    );
+    render(bookResults);
+  } else {
+    render(books);
+  }
+});
+
+let searchButton = document.querySelector(".header__search__button");
+searchButton.addEventListener("click", () => {
+  console.log("search button");
+  searchModal();
+});
+
 const createHtmlElement = (html) => {
   const template = document.createElement("template");
   template.innerHTML = html.trim();
@@ -59,6 +82,23 @@ const modalElement = (book) => {
   removeBook(book);
 };
 
+const searchModal = () => {
+  const searchModal = createHtmlElement(`
+        <dialog id="search__modal">
+            <button id="search__modal__close">Close</button>
+        </dialog>
+    `);
+  document.querySelector(".container").append(searchModal);
+  document
+    .querySelector("#search__modal__close")
+    .addEventListener("click", () => {
+      let modal = document.querySelector("#search__modal");
+      modal.close();
+      modal.remove();
+    });
+  document.querySelector("#search__modal").showModal();
+};
+
 const bookElement = (book) => {
   const newBook = createHtmlElement(`
         <div id="container-${book.isbn}" class="book">
@@ -75,7 +115,9 @@ const render = (arr) => {
   }
   arr.length == 0
     ? container.append(
-        createHtmlElement(`<div>Add some books to your library!</div>`)
+        books.length > 0
+          ? createHtmlElement(`<div>No search results</div>`)
+          : createHtmlElement(`<div>Add some books to your library!</div>`)
       )
     : arr.forEach((book) => {
         bookElement(book);

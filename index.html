@@ -16,7 +16,14 @@
     <header class="header">
       <h1 class="header__title">My Library</h1>
       <div class="header__options">
-        <button class="header__button">Add New Book</button>
+        <form method="dialog">
+          <input
+            class="header__search__input"
+            type="text"
+            placeholder="Search library"
+          />
+        </form>
+        <button class="header__search__button">Add New Book</button>
       </div>
     </header>
     <div class="container"></div>
