@@ -17,7 +17,14 @@ dialog {
     border-left: 10px solid green;
     border-bottom: 8px solid transparent;
 }
-
+.header__container {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
 .header {
     display: flex;
     justify-content: space-between;
@@ -64,6 +71,8 @@ dialog {
 
 @media (min-width: 400px) {
     .container {
+        // position: realtive;
+        // top: 10rem;
         width: 75%;
     }
     .header {
@@ -72,10 +81,7 @@ dialog {
         font-weight: 200;
         padding: 30px;
         margin-inline: auto;
-
-
     }
-    
 }
 
 
