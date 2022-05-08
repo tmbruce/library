@@ -32,18 +32,21 @@ searchBox.addEventListener("input", (e) => {
   }
 });
 
+//Open modal control for new book search
 let searchButton = document.querySelector(".header__search__button");
 searchButton.addEventListener("click", () => {
   console.log("search button");
   searchModal();
 });
 
+//Generic function to create html element
 const createHtmlElement = (html) => {
   const template = document.createElement("template");
   template.innerHTML = html.trim();
   return template.content.firstElementChild;
 };
 
+//Open modal control for book details
 const showModal = (book) => {
   document
     .getElementById(`container-${book.isbn}`)
@@ -53,12 +56,14 @@ const showModal = (book) => {
     });
 };
 
+//Close modal control for book details
 const closeModal = (book) => {
   document.getElementById(`btn-${book.isbn}`).addEventListener("click", () => {
     document.getElementById(book.isbn).close();
   });
 };
 
+//Removes book from rendering array
 const removeBook = (book) => {
   document
     .getElementById(`delete-${book.isbn}`)
@@ -68,6 +73,7 @@ const removeBook = (book) => {
     });
 };
 
+//Creates modal element for book details
 const modalElement = (book) => {
   const newModal = createHtmlElement(`
     <dialog id=${book.isbn}>
@@ -82,6 +88,7 @@ const modalElement = (book) => {
   removeBook(book);
 };
 
+//Creates modal for new book search
 const searchModal = () => {
   const searchModal = createHtmlElement(`
         <dialog id="search__modal">
@@ -99,6 +106,7 @@ const searchModal = () => {
   document.querySelector("#search__modal").showModal();
 };
 
+//Creates image container for book display
 const bookElement = (book) => {
   const newBook = createHtmlElement(`
         <div id="container-${book.isbn}" class="book">
@@ -108,6 +116,7 @@ const bookElement = (book) => {
   document.querySelector(".container").append(newBook);
 };
 
+//Rendering method to display books
 const render = (arr) => {
   let container = document.querySelector(".container");
   while (container.firstChild) {
@@ -125,4 +134,5 @@ const render = (arr) => {
       });
 };
 
+//Initial rendering
 render(books);

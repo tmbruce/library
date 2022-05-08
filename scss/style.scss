@@ -24,6 +24,7 @@ dialog {
     display: flex;
     justify-content: center;
     background-color: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2)
 }
 .header {
     display: flex;
@@ -71,8 +72,6 @@ dialog {
 
 @media (min-width: 400px) {
     .container {
-        // position: realtive;
-        // top: 10rem;
         width: 75%;
     }
     .header {
