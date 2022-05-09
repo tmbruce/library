@@ -5,7 +5,7 @@ dialog {
     border: none;
     border-radius: 10px;
     &::backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(2px);
     }
 }

@@ -1,5 +1,6 @@
 import Book from "./js/book.js";
 import defaultBooks from "./js/defaultBooks.js";
+import getBook from "./js/api.js";
 
 let books = [];
 defaultBooks.map((defaultBook) => {
@@ -136,3 +137,10 @@ const render = (arr) => {
 
 //Initial rendering
 render(books);
+
+const search = async (searchTerm) => {
+  let res = await getBook(searchTerm);
+  console.log(res.items);
+};
+
+search("This is your mind on plants");
