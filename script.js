@@ -85,23 +85,36 @@ const modalElement = (book) => {
           <div class="book__info">
             <ul>
               <li class="book__title">${book.title}</li>
+              <li class="subtitle">${book.subtitle}</li>
               <li class="book__author">by: ${book.author}</li>
               <li class="book__detail">Published: ${book.year}</li>
               <li class="book__detail">${book.pages} pages</li>
               <li>
                 <label class="checkbox__container">Read
-                  <input type="checkbox" checked="checked">
-                  <span class="checkmark"></span>
+                <input id="read__checkbox__${book.isbn}" type="checkbox">
                 </label>
               </li>
             </ul>
           </div>
         </div>
         <div class="book__snippet">${book.snippet}</div>
-        <button id=delete-${book.isbn}>Remove</button>
+        <button id=delete-${book.isbn}>Remove from library</button>
     </dialog>
     `);
   document.querySelector(".container").append(newModal);
+  let checkbox = document.querySelector(`#read__checkbox__${book.isbn}`);
+  book.read ? (checkbox.checked = true) : (checkbox.checked = false);
+  checkbox.addEventListener("click", () => {
+    let checkbox = document.querySelector(
+      `#read__checkbox__${book.isbn}`
+    ).checked;
+    books.forEach((b) => {
+      if (b.isbn == book.isbn) {
+        book.read = checkbox;
+        console.log(books);
+      }
+    });
+  });
   showModal(book);
   closeModal(book);
   removeBook(book);
@@ -163,8 +176,11 @@ const render = (arr) => {
       });
 };
 
+let localBooks = localStorage.getItem("books");
+localBooks ? render(localBooks) : render(books);
+
 //Initial rendering
-render(books);
+//render(books);
 
 const search = async (searchTerm) => {
   let res = await getBook(searchTerm);
