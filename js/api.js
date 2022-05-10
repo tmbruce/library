@@ -10,12 +10,6 @@ async function getBook(searchTerm) {
   const response = await fetch(api_url);
   const data = await response.json();
   return data;
-  //let img = new Image();
-  //img.src = data.items[0].volumeInfo.imageLinks.thumbnail;
-  //imgContainer = document.createElement("div");
-  //imgContainer.append(img);
-  //imgContainer.className = "book";
-  //document.querySelector(".container").append(imgContainer);
 }
 
 export default getBook;

@@ -36,7 +36,6 @@ searchBox.addEventListener("input", (e) => {
 //Open modal control for new book search
 let searchButton = document.querySelector(".header__search__button");
 searchButton.addEventListener("click", () => {
-  console.log("search button");
   searchModal();
 });
 
@@ -79,7 +78,7 @@ const modalElement = (book) => {
   const newModal = createHtmlElement(`
     <dialog id=${book.isbn}>
         <img src=${book.imgSrc}/>
-        <button id=btn-${book.isbn}>Close</button>
+        <button id=btn-${book.isbn}>✕</button>
         <button id=delete-${book.isbn}>Remove</button>
     </dialog>
     `);
@@ -93,10 +92,20 @@ const modalElement = (book) => {
 const searchModal = () => {
   const searchModal = createHtmlElement(`
         <dialog id="search__modal">
-            <button id="search__modal__close">Close</button>
+          <form method="dialog">
+            <input autocomplete='off' id="search__term" type="text">
+            <button id="modal__search">Search</button>
+          </form>
+            <button id="search__modal__close">✕</button>
         </dialog>
     `);
   document.querySelector(".container").append(searchModal);
+  let searchBox = document.querySelector("#search__term");
+  document.querySelector("#modal__search").addEventListener("click", (e) => {
+    e.preventDefault();
+    search(searchBox);
+    searchBox.value = "";
+  });
   document
     .querySelector("#search__modal__close")
     .addEventListener("click", () => {
@@ -142,5 +151,3 @@ const search = async (searchTerm) => {
   let res = await getBook(searchTerm);
   console.log(res.items);
 };
-
-search("This is your mind on plants");

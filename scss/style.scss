@@ -2,12 +2,33 @@
 @import 'utilities';
 
 dialog {
+    height: 40%;
+    width: 40%;
     border: none;
-    border-radius: 10px;
+    // border-radius: 10px;
     &::backdrop {
         background-color: rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(2px);
     }
+}
+
+[id^='btn-']{
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+#search__modal__close {
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 .ribbon {
