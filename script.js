@@ -6,12 +6,14 @@ let books = [];
 defaultBooks.map((defaultBook) => {
   let book = new Book(
     defaultBook.title,
+    defaultBook.subtitle,
     defaultBook.author,
     defaultBook.isbn,
     defaultBook.year,
     defaultBook.pages,
     defaultBook.read,
-    defaultBook.imgSrc
+    defaultBook.imgSrc,
+    defaultBook.snippet
   );
   books.push(book);
 });
@@ -77,8 +79,25 @@ const removeBook = (book) => {
 const modalElement = (book) => {
   const newModal = createHtmlElement(`
     <dialog id=${book.isbn}>
-        <img src=${book.imgSrc}/>
         <button id=btn-${book.isbn}>✕</button>
+        <div class="book__container">
+          <img src=${book.imgSrc} loading='lazy' alt="${book.title}"/>
+          <div class="book__info">
+            <ul>
+              <li class="book__title">${book.title}</li>
+              <li class="book__author">by: ${book.author}</li>
+              <li class="book__detail">Published: ${book.year}</li>
+              <li class="book__detail">${book.pages} pages</li>
+              <li>
+                <label class="checkbox__container">Read
+                  <input type="checkbox" checked="checked">
+                  <span class="checkmark"></span>
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="book__snippet">${book.snippet}</div>
         <button id=delete-${book.isbn}>Remove</button>
     </dialog>
     `);
@@ -103,7 +122,7 @@ const searchModal = () => {
   let searchBox = document.querySelector("#search__term");
   document.querySelector("#modal__search").addEventListener("click", (e) => {
     e.preventDefault();
-    search(searchBox);
+    search(searchBox.value);
     searchBox.value = "";
   });
   document
@@ -120,7 +139,7 @@ const searchModal = () => {
 const bookElement = (book) => {
   const newBook = createHtmlElement(`
         <div id="container-${book.isbn}" class="book">
-            <img src="${book.imgSrc}"/>
+            <img src="${book.imgSrc}" loading="lazy" alt="${book.title}"/>
         </div>
     `);
   document.querySelector(".container").append(newBook);

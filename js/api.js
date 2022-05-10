@@ -9,6 +9,7 @@ async function getBook(searchTerm) {
 
   const response = await fetch(api_url);
   const data = await response.json();
+  console.log(searchTerm);
   return data;
 }
 

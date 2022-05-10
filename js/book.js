@@ -1,11 +1,22 @@
-function Book(title, author, isbn, year, pages, read, imgSrc) {
+function Book(
+  title,
+  subtitle,
+  author,
+  isbn,
+  year,
+  pages,
+  read,
+  imgSrc,
+  snippet
+) {
   this.title = title;
-  this.author = author;
+  (this.subtitle = subtitle), (this.author = author);
   this.isbn = isbn;
   this.year = year;
   this.pages = pages;
   this.read = read;
   this.imgSrc = imgSrc;
+  this.snippet = snippet;
 }
 
 export default Book;
