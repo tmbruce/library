@@ -20,8 +20,12 @@ dialog {
 ul li:nth-last-of-type(n + 2){
     margin-bottom: 10px;
 }
-
-
+label {
+    cursor: pointer;
+}
+[id^='read__checkbox__'] {
+    cursor: pointer;
+}
 .book__title {
     font-size: 2rem;
     font-weight: 500;
@@ -47,7 +51,6 @@ ul li:nth-last-of-type(n + 2){
     bottom: 5px;
     right: 5px;
 }
-
 [id^='btn-']{
     cursor: pointer;
     background-color: white;
@@ -65,7 +68,6 @@ ul li:nth-last-of-type(n + 2){
     top: 5px;
     right: 5px;
 }
-
 .ribbon {
     width: 0;
     height: 30px;
@@ -115,7 +117,6 @@ ul li:nth-last-of-type(n + 2){
         border: 1px solid black;
     }
 }
-
 @media (max-width: 399px) {
     .header {
         margin: 10px;
@@ -125,7 +126,6 @@ ul li:nth-last-of-type(n + 2){
         }
     }
 }
-
 @media (min-width: 400px) {
     .container {
         width: 75%;
