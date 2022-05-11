@@ -2,12 +2,10 @@
 @import 'utilities';
 
 dialog {
-    //height: 30%;
     width: 35%;
     border: none;
-    // border-radius: 10px;
     &::backdrop {
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(50, 50, 50, 0.2);
         backdrop-filter: blur(2px);
     }
 }
@@ -59,6 +57,20 @@ label {
     top: 5px;
     right: 5px;
 }
+.header__search__button,  #modal__search{
+    cursor: pointer;
+    align-self: center;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 5px 10px;
+    background-color: white;
+    color: black;
+    margin-left: 20px;
+    &:hover {
+        transform: scale(1.05);
+        transition: 200ms;
+    }
+}
 #search__modal__close {
     cursor: pointer;
     background-color: white;
@@ -68,12 +80,12 @@ label {
     top: 5px;
     right: 5px;
 }
-.ribbon {
-    width: 0;
-    height: 30px;
-    border-right: 10px solid green;
-    border-left: 10px solid green;
-    border-bottom: 8px solid transparent;
+#search__term {
+    width: 200px;
+    height: 1.5rem;
+    padding-left: 15px;
+    border-radius: 15px;
+    border: 1px solid black;
 }
 .header__container {
     width: 100%;
@@ -92,20 +104,7 @@ label {
         display: flex;
         align-items: center;
     }
-    &__search__button {
-        cursor: pointer;
-        align-self: center;
-        border: 1px solid black;
-        border-radius: 15px;
-        padding: 5px 10px;
-        background-color: white;
-        color: black;
-        margin-left: 20px;
-        &:hover {
-            transform: scale(1.05);
-            transition: 200ms;
-        }
-    }
+
     & form {
         display: flex;
         align-items: center;

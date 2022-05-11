@@ -2,6 +2,7 @@ import Book from "./js/book.js";
 import defaultBooks from "./js/defaultBooks.js";
 import getBook from "./js/api.js";
 
+let searchResults = [];
 let books = [];
 defaultBooks.map((defaultBook) => {
   let book = new Book(
@@ -125,10 +126,11 @@ const searchModal = () => {
   const searchModal = createHtmlElement(`
         <dialog id="search__modal">
           <form method="dialog">
-            <input autocomplete='off' id="search__term" type="text">
+            <input autocomplete='off' id="search__term" type="text" placeholder="Search by author, title, or isbn">
             <button id="modal__search">Search</button>
           </form>
             <button id="search__modal__close">✕</button>
+            <div id="search__results"></div>
         </dialog>
     `);
   document.querySelector(".container").append(searchModal);
