@@ -3,13 +3,12 @@
 async function getBook(searchTerm) {
   const params = new URLSearchParams({
     q: searchTerm,
-    maxResults: "5",
+    maxResults: "12",
   });
   const api_url = `https://www.googleapis.com/books/v1/volumes?${params}`;
 
   const response = await fetch(api_url);
   const data = await response.json();
-  console.log(searchTerm);
   return data;
 }
 

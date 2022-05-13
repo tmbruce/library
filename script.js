@@ -112,7 +112,6 @@ const modalElement = (book) => {
     books.forEach((b) => {
       if (b.isbn == book.isbn) {
         book.read = checkbox;
-        console.log(books);
       }
     });
   });
@@ -137,8 +136,30 @@ const searchModal = () => {
   let searchBox = document.querySelector("#search__term");
   document.querySelector("#modal__search").addEventListener("click", (e) => {
     e.preventDefault();
-    search(searchBox.value);
-    searchBox.value = "";
+    const showSearch = async () => {
+      searchResults = [];
+      let rawResults = await search(searchBox.value);
+      searchBox.value = "";
+      console.log(rawResults);
+      searchResults = rawResults.map((result) => {
+        return new Book(
+          result.volumeInfo.title,
+          result.volumeInfo.subtitle,
+          result.volumeInfo.authors[0],
+          result.volumeInfo.industryIdentifiers[0].identifier,
+          result.volumeInfo.publishedDate,
+          result.volumeInfo.pageCount,
+          result.volumeInfo.read,
+          result.volumeInfo.imageLinks.thumbnail,
+          result.searchInfo.textSinppet
+        );
+      });
+      clear("#search__results");
+      searchResults.forEach((result) => {
+        bookElement(result, "#search__results");
+      });
+    };
+    showSearch();
   });
   document
     .querySelector("#search__modal__close")
@@ -151,21 +172,25 @@ const searchModal = () => {
 };
 
 //Creates image container for book display
-const bookElement = (book) => {
+const bookElement = (book, destination) => {
+  console.log(book);
   const newBook = createHtmlElement(`
         <div id="container-${book.isbn}" class="book">
             <img src="${book.imgSrc}" loading="lazy" alt="${book.title}"/>
         </div>
     `);
-  document.querySelector(".container").append(newBook);
+  document.querySelector(destination).append(newBook);
 };
 
-//Rendering method to display books
-const render = (arr) => {
-  let container = document.querySelector(".container");
+const clear = (element) => {
+  let container = document.querySelector(element);
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
+};
+//Rendering method to display books
+const render = (arr) => {
+  clear(".container");
   arr.length == 0
     ? container.append(
         books.length > 0
@@ -173,7 +198,7 @@ const render = (arr) => {
           : createHtmlElement(`<div>Add some books to your library!</div>`)
       )
     : arr.forEach((book) => {
-        bookElement(book);
+        bookElement(book, ".container");
         modalElement(book);
       });
 };
@@ -181,10 +206,7 @@ const render = (arr) => {
 let localBooks = localStorage.getItem("books");
 localBooks ? render(localBooks) : render(books);
 
-//Initial rendering
-//render(books);
-
 const search = async (searchTerm) => {
   let res = await getBook(searchTerm);
-  console.log(res.items);
+  return res.items;
 };

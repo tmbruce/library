@@ -5,7 +5,7 @@ function Book(
   isbn,
   year,
   pages,
-  read,
+  read = false,
   imgSrc,
   snippet
 ) {
