@@ -93,7 +93,6 @@ const removeButton = (book) => {
 const modalElement = (book, destination) => {
   let addNewBook;
   destination == ".container" ? (addNewBook = false) : (addNewBook = true);
-  console.log(addNewBook);
   const newModal = createHtmlElement(`
     <dialog id=${book.isbn}>
         <button id=btn-${book.isbn}>✕</button>
@@ -106,11 +105,15 @@ const modalElement = (book, destination) => {
               <li class="book__author">by: ${book.author}</li>
               <li class="book__detail">Published: ${book.year}</li>
               <li class="book__detail">${book.pages} pages</li>
-              <li>
-                <label class="checkbox__container">Read
-                <input id="read__checkbox__${book.isbn}" type="checkbox">
-                </label>
-              </li>
+              ${
+                addNewBook
+                  ? `<div></div>`
+                  : `<li>
+              <label class="checkbox__container">Read
+              <input id="read__checkbox__${book.isbn}" type="checkbox">
+              </label>
+            </li>`
+              }
             </ul>
           </div>
         </div>
@@ -160,7 +163,6 @@ const searchModal = () => {
       searchResults = [];
       let rawResults = await search(searchBox.value);
       searchBox.value = "";
-      console.log(rawResults);
       searchResults = rawResults.map((result) => {
         return new Book(
           result.volumeInfo.title,
@@ -194,7 +196,6 @@ const searchModal = () => {
 
 //Creates image container for book display
 const bookElement = (book, destination) => {
-  console.log(book);
   const newBook = createHtmlElement(`
         <div id="container-${book.isbn}" class="book">
             <img src="${book.imgSrc}" loading="lazy" alt="${book.title}"/>
