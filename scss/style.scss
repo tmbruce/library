@@ -47,7 +47,7 @@ label {
     line-height: 1.2;
     margin-bottom: 30px;
 }
-[id^='delete-'] {
+[id^='delete-'], [id^='add-']  {
     cursor: pointer;
     background-color: white;
     border: none;

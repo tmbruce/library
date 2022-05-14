@@ -76,8 +76,24 @@ const removeBook = (book) => {
     });
 };
 
+const addBook = (book) => {
+  document.getElementById(`add-${book.isbn}`).addEventListener("click", () => {
+    books.push(book);
+    render(books);
+  });
+};
+
+const addButton = (book) => {
+  return `<button id=add-${book.isbn}>Add to library</button>`;
+};
+const removeButton = (book) => {
+  return `<button id=delete-${book.isbn}>Remove from library</button>`;
+};
 //Creates modal element for book details
-const modalElement = (book) => {
+const modalElement = (book, destination) => {
+  let addNewBook;
+  destination == ".container" ? (addNewBook = false) : (addNewBook = true);
+  console.log(addNewBook);
   const newModal = createHtmlElement(`
     <dialog id=${book.isbn}>
         <button id=btn-${book.isbn}>✕</button>
@@ -99,25 +115,29 @@ const modalElement = (book) => {
           </div>
         </div>
         <div class="book__snippet">${book.snippet}</div>
-        <button id=delete-${book.isbn}>Remove from library</button>
+        ${addNewBook ? addButton(book) : removeButton(book)}
     </dialog>
     `);
-  document.querySelector(".container").append(newModal);
-  let checkbox = document.querySelector(`#read__checkbox__${book.isbn}`);
-  book.read ? (checkbox.checked = true) : (checkbox.checked = false);
-  checkbox.addEventListener("click", () => {
-    let checkbox = document.querySelector(
-      `#read__checkbox__${book.isbn}`
-    ).checked;
-    books.forEach((b) => {
-      if (b.isbn == book.isbn) {
-        book.read = checkbox;
-      }
+  //<button id=delete-${book.isbn}>Remove from library</button>
+
+  document.querySelector(destination).append(newModal);
+  if (destination == ".container") {
+    let checkbox = document.querySelector(`#read__checkbox__${book.isbn}`);
+    book.read ? (checkbox.checked = true) : (checkbox.checked = false);
+    checkbox.addEventListener("click", () => {
+      let checkbox = document.querySelector(
+        `#read__checkbox__${book.isbn}`
+      ).checked;
+      books.forEach((b) => {
+        if (b.isbn == book.isbn) {
+          book.read = checkbox;
+        }
+      });
     });
-  });
+  }
   showModal(book);
   closeModal(book);
-  removeBook(book);
+  addNewBook ? addBook(book) : removeBook(book);
 };
 
 //Creates modal for new book search
@@ -151,12 +171,13 @@ const searchModal = () => {
           result.volumeInfo.pageCount,
           result.volumeInfo.read,
           result.volumeInfo.imageLinks.thumbnail,
-          result.searchInfo.textSinppet
+          result.searchInfo.textSnippet
         );
       });
       clear("#search__results");
       searchResults.forEach((result) => {
         bookElement(result, "#search__results");
+        modalElement(result, "#search__results");
       });
     };
     showSearch();
@@ -199,7 +220,7 @@ const render = (arr) => {
       )
     : arr.forEach((book) => {
         bookElement(book, ".container");
-        modalElement(book);
+        modalElement(book, ".container");
       });
 };
 
