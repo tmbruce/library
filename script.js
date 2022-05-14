@@ -80,6 +80,7 @@ const addBook = (book) => {
   document.getElementById(`add-${book.isbn}`).addEventListener("click", () => {
     books.push(book);
     render(books);
+    searchResults = [];
   });
 };
 
@@ -121,8 +122,6 @@ const modalElement = (book, destination) => {
         ${addNewBook ? addButton(book) : removeButton(book)}
     </dialog>
     `);
-  //<button id=delete-${book.isbn}>Remove from library</button>
-
   document.querySelector(destination).append(newModal);
   if (destination == ".container") {
     let checkbox = document.querySelector(`#read__checkbox__${book.isbn}`);
@@ -152,7 +151,12 @@ const searchModal = () => {
             <button id="modal__search">Search</button>
           </form>
             <button id="search__modal__close">✕</button>
-            <div id="search__results"></div>
+            ${
+              searchResults.length == 0
+                ? `<div id="search__results"><h1>Find something new!</h1></div>`
+                : `<div id="search__results"></div>`
+            }
+            
         </dialog>
     `);
   document.querySelector(".container").append(searchModal);
