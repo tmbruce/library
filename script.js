@@ -4,20 +4,23 @@ import getBook from "./js/api.js";
 
 let searchResults = [];
 let books = [];
-defaultBooks.map((defaultBook) => {
-  let book = new Book(
-    defaultBook.title,
-    defaultBook.subtitle,
-    defaultBook.author,
-    defaultBook.isbn,
-    defaultBook.year,
-    defaultBook.pages,
-    defaultBook.read,
-    defaultBook.imgSrc,
-    defaultBook.snippet
-  );
-  books.push(book);
-});
+let localBooks = localStorage.getItem("books");
+localBooks
+  ? (books = JSON.parse(localBooks))
+  : defaultBooks.map((defaultBook) => {
+      let book = new Book(
+        defaultBook.title,
+        defaultBook.subtitle,
+        defaultBook.author,
+        defaultBook.isbn,
+        defaultBook.year,
+        defaultBook.pages,
+        defaultBook.read,
+        defaultBook.imgSrc,
+        defaultBook.snippet
+      );
+      books.push(book);
+    });
 
 let searchBox = document.querySelector(".header__search__input");
 searchBox.addEventListener("input", (e) => {
@@ -72,6 +75,7 @@ const removeBook = (book) => {
     .getElementById(`delete-${book.isbn}`)
     .addEventListener("click", () => {
       books = books.filter((val) => val.isbn != book.isbn);
+      localStorage.setItem("books", JSON.stringify(books));
       render(books);
     });
 };
@@ -79,6 +83,7 @@ const removeBook = (book) => {
 const addBook = (book) => {
   document.getElementById(`add-${book.isbn}`).addEventListener("click", () => {
     books.push(book);
+    localStorage.setItem("books", JSON.stringify(books));
     render(books);
     searchResults = [];
   });
@@ -216,6 +221,7 @@ const clear = (element) => {
 };
 //Rendering method to display books
 const render = (arr) => {
+  console.log(books);
   clear(".container");
   arr.length == 0
     ? container.append(
@@ -229,8 +235,7 @@ const render = (arr) => {
       });
 };
 
-let localBooks = localStorage.getItem("books");
-localBooks ? render(localBooks) : render(books);
+render(books);
 
 const search = async (searchTerm) => {
   let res = await getBook(searchTerm);
