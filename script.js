@@ -173,16 +173,28 @@ const searchModal = () => {
       let rawResults = await search(searchBox.value);
       searchBox.value = "";
       searchResults = rawResults.map((result) => {
+        let imgLink;
+        let identifier;
+        //let thumbnail = result.volumeInfo.imageLinks.thumbnail;
+        try {
+          imgLink = result.volumeInfo.imageLinks.thumbnail;
+          identifier = result.volumeInfo.industryIdentifiers[0].identifier;
+        } catch (e) {
+          imgLink = "./img/genericBookCover.jpeg";
+          identifier = result.id;
+        }
+
+        console.log(result);
         return new Book(
           result.volumeInfo.title,
           result.volumeInfo.subtitle,
           result.volumeInfo.authors[0],
-          result.volumeInfo.industryIdentifiers[0].identifier,
+          identifier,
           result.volumeInfo.publishedDate,
           result.volumeInfo.pageCount,
           result.volumeInfo.read,
-          result.volumeInfo.imageLinks.thumbnail,
-          result.searchInfo.textSnippet
+          imgLink,
+          result.volumeInfo.description
         );
       });
       clear("#search__results");
@@ -224,11 +236,13 @@ const render = (arr) => {
   console.log(books);
   clear(".container");
   arr.length == 0
-    ? container.append(
-        books.length > 0
-          ? createHtmlElement(`<div>No search results</div>`)
-          : createHtmlElement(`<div>Add some books to your library!</div>`)
-      )
+    ? document
+        .querySelector(".container")
+        .append(
+          books.length > 0
+            ? createHtmlElement(`<div>No search results</div>`)
+            : createHtmlElement(`<div>Add some books to your library!</div>`)
+        )
     : arr.forEach((book) => {
         bookElement(book, ".container");
         modalElement(book, ".container");
@@ -239,5 +253,6 @@ render(books);
 
 const search = async (searchTerm) => {
   let res = await getBook(searchTerm);
+  console.log(res.items);
   return res.items;
 };

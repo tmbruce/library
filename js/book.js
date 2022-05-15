@@ -1,13 +1,13 @@
 function Book(
-  title,
-  subtitle,
-  author,
-  isbn,
-  year,
-  pages,
+  title = "",
+  subtitle = "",
+  author = "",
+  isbn = "",
+  year = "",
+  pages = "",
   read = false,
-  imgSrc,
-  snippet
+  imgSrc = "",
+  snippet = ""
 ) {
   this.title = title;
   (this.subtitle = subtitle), (this.author = author);
