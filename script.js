@@ -140,6 +140,7 @@ const modalElement = (book, destination) => {
           book.read = checkbox;
         }
       });
+      localStorage.setItem("books", JSON.stringify(books));
     });
   }
   showModal(book);
@@ -253,6 +254,5 @@ render(books);
 
 const search = async (searchTerm) => {
   let res = await getBook(searchTerm);
-  console.log(res.items);
   return res.items;
 };
