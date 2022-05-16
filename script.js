@@ -184,8 +184,6 @@ const searchModal = () => {
           imgLink = "./img/genericBookCover.jpeg";
           identifier = result.id;
         }
-
-        console.log(result);
         return new Book(
           result.volumeInfo.title,
           result.volumeInfo.subtitle,
@@ -234,7 +232,6 @@ const clear = (element) => {
 };
 //Rendering method to display books
 const render = (arr) => {
-  console.log(books);
   clear(".container");
   arr.length == 0
     ? document
